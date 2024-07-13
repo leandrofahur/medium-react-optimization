@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+
+// mui:
+import { Button, Card, TextField } from "@mui/material";
+
+// custom:
+import ListItem from "./components/ListItem/ListItem";
+
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [items, setItems] = useState([]);
+  const [filter, setFilter] = useState("");
+  const [newItem, setNewItem] = useState("");
+
+  const handleAddItem = () => {
+    setItems([...items, newItem]);
+    setNewItem("");
+  };
+
+  const filteredItems = items.filter((item) => item.includes(filter));
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Card className="app">
+      <h1>Item List</h1>
+      <TextField
+        variant="standard"
+        type="text"
+        value={newItem}
+        onChange={(e) => setNewItem(e.target.value)}
+        placeholder="New item"
+        className="textField"
+      />
+      <Button variant="contained" onClick={handleAddItem}>
+        Add Item
+      </Button>
+      <TextField
+        variant="standard"
+        type="text"
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        placeholder="Filter items"
+        className="textField"
+      />
+
+      <ul>
+        {filteredItems.map((item, index) => (
+          <ListItem key={index} item={item} />
+        ))}
+      </ul>
+    </Card>
+  );
 }
 
-export default App
+export default App;
