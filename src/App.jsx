@@ -1,12 +1,15 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 // mui:
 import { Button, Card, TextField } from "@mui/material";
 
-// custom:
-import ListItem from "./components/ListItem/ListItem";
-
 import "./App.css";
+
+function ListItem(props) {
+  const { item } = props;
+  return <li>{item}</li>;
+}
 
 function App() {
   const [items, setItems] = useState([]);
@@ -51,5 +54,9 @@ function App() {
     </Card>
   );
 }
+
+ListItem.propTypes = {
+  item: PropTypes.string.isRequired,
+};
 
 export default App;
